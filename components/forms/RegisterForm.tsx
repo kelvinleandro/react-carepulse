@@ -3,24 +3,17 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { RadioGroup } from "@/components/ui/radio-group";
 import CustomFormField from "../CustomFormField";
 import SubmitButton from "../SubmitButton";
 import { useState } from "react";
 import { PatientFormValidation } from "@/lib/validation";
 import { useRouter } from "next/navigation";
-import { createUser, registerPatient } from "@/lib/actions/patient.actions";
+import { registerPatient } from "@/lib/actions/patient.actions";
 import { FormFieldType } from "./PatientForm";
 import { Doctors, GenderOptions, IdentificationTypes, PatientFormDefaultValues } from "@/constants";
 import { Label } from "../ui/label";
@@ -56,18 +49,19 @@ const RegisterForm = ({ user }: { user: User }) => {
     try {
       const patientData = {
         ...values,
-        user: user.$id,
+        userId: user.$id,
         birthDate: new Date(values.birthDate),
         identificationDocument: formData,
       }
 
       // @ts-ignore
-      const patient = await registerPatient(patientdata);
+      const patient = await registerPatient(patientData);
       
       if(patient) router.push(`/patients/${user.$id}/new-appointment`)
     } catch (error) {
       console.log(error);
     }
+    setIsLoading(false);
   }
 
   return (

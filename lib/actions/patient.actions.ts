@@ -65,7 +65,7 @@ export const registerPatient = async ({
       PATIENT_COLLECTION_ID!,
       ID.unique(),
       {
-        identificationDocument: file?.$id || null,
+        identificationDocumentId: file?.$id || null,
         identificationDocumentUrl: `${ENDPOINT}/storage/buckets/${BUCKET_ID}/files/${file?.$id}/view?project=${PROJECT_ID}`,
         ...patient,
       }
@@ -74,5 +74,18 @@ export const registerPatient = async ({
     return parseStringify(newPatient);
   } catch (error) {
     console.error("An error occurred while creating a new patient:", error);
+  }
+};
+
+export const getPatient = async (userId: string) => {
+  try {
+    const patients = await database.listDocuments( DATABASE_ID!,
+      PATIENT_COLLECTION_ID!, [Query.equal('userId', userId)]);
+    return parseStringify(patients.documents[0]);
+  } catch (error) {
+    console.error(
+      "An error occurred while retrieving the user details:",
+      error
+    );
   }
 };
