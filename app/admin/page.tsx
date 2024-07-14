@@ -11,7 +11,7 @@ const Admin = async () => {
 
   return (
     <div className="mx-auto flex flex-col max-w-7xl space-y-14">
-      <header className="admin-headere">
+      <header className="admin-header">
         <Link href="/" className="cursor-pointer">
           <Image
             src="/assets/icons/logo-full.svg"
