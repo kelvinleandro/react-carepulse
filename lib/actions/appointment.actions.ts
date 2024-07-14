@@ -62,7 +62,7 @@ export const getRecentAppointmentList = async () => {
         } else if (appointment.status === "pending") {
           acc.pendingCount += 1;
         } else if (appointment.status === "cancelled") {
-          acc.pendingCount += 1;
+          acc.cancelledCount += 1;
         }
         return acc;
       },
